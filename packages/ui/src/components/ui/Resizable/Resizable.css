@@ -1,0 +1,21 @@
+/* Layer order, lowest to highest:
+   primitives   - this component's own styles
+   compositions - styles this file puts on another design-system component
+   descendants  - rules that style children (*:, [&_svg], [&>x])
+   utilities    - Tailwind classes passed in through className, so they always win. */
+@layer theme, base, components, utilities;
+@layer components.primitives, components.compositions, components.descendants;
+
+@layer components.primitives {
+  .ui-resizable-panel-group {
+    @apply flex h-full w-full aria-[orientation=vertical]:flex-col;
+  }
+
+  .ui-resizable-handle {
+    @apply relative flex w-px items-center justify-center bg-border ring-offset-background after:absolute after:inset-y-0 after:left-1/2 after:w-1 after:-translate-x-1/2 focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-hidden aria-[orientation=horizontal]:h-px aria-[orientation=horizontal]:w-full aria-[orientation=horizontal]:after:left-0 aria-[orientation=horizontal]:after:h-1 aria-[orientation=horizontal]:after:w-full aria-[orientation=horizontal]:after:translate-x-0 aria-[orientation=horizontal]:after:-translate-y-1/2 [&[aria-orientation=horizontal]>div]:rotate-90;
+  }
+
+  .ui-resizable-handle__div {
+    @apply z-10 flex h-6 w-1 shrink-0 rounded-lg bg-border;
+  }
+}

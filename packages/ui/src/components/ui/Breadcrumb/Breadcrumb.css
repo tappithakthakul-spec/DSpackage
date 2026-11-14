@@ -1,0 +1,43 @@
+/* Layer order, lowest to highest:
+   primitives   - this component's own styles
+   compositions - styles this file puts on another design-system component
+   descendants  - rules that style children (*:, [&_svg], [&>x])
+   utilities    - Tailwind classes passed in through className, so they always win. */
+@layer theme, base, components, utilities;
+@layer components.primitives, components.compositions, components.descendants;
+
+@layer components.primitives {
+  .ui-breadcrumb-list {
+    @apply flex flex-wrap items-center gap-1.5 text-sm wrap-break-word text-muted-foreground;
+  }
+
+  .ui-breadcrumb-item {
+    @apply inline-flex items-center gap-1;
+  }
+
+  .ui-breadcrumb-link {
+    @apply transition-colors hover:text-foreground;
+  }
+
+  .ui-breadcrumb-page {
+    @apply font-normal text-foreground;
+  }
+
+  .ui-breadcrumb-ellipsis {
+    @apply flex size-5 items-center justify-center;
+  }
+
+  .ui-breadcrumb-ellipsis__span {
+    @apply sr-only;
+  }
+}
+
+@layer components.descendants {
+  .ui-breadcrumb-separator {
+    @apply [&>svg]:size-3.5;
+  }
+
+  .ui-breadcrumb-ellipsis {
+    @apply [&>svg]:size-4;
+  }
+}

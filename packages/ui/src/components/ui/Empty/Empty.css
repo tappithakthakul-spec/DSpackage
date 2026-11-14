@@ -1,0 +1,55 @@
+/* Layer order, lowest to highest:
+   primitives   - this component's own styles
+   compositions - styles this file puts on another design-system component
+   descendants  - rules that style children (*:, [&_svg], [&>x])
+   utilities    - Tailwind classes passed in through className, so they always win. */
+@layer theme, base, components, utilities;
+@layer components.primitives, components.compositions, components.descendants;
+
+@layer components.primitives {
+  .ui-empty-media {
+    @apply mb-2 flex shrink-0 items-center justify-center;
+  }
+
+  .ui-empty-media--variant-default {
+    @apply bg-transparent;
+  }
+
+  .ui-empty-media--variant-icon {
+    @apply flex size-8 shrink-0 items-center justify-center rounded-lg bg-muted text-foreground;
+  }
+
+  .ui-empty {
+    @apply flex w-full min-w-0 flex-1 flex-col items-center justify-center gap-4 rounded-xl border-dashed p-6 text-center text-balance;
+  }
+
+  .ui-empty-header {
+    @apply flex max-w-sm flex-col items-center gap-2;
+  }
+
+  .ui-empty-title {
+    @apply font-heading text-sm font-medium tracking-tight;
+  }
+
+  .ui-empty-description {
+    @apply text-sm/relaxed text-muted-foreground;
+  }
+
+  .ui-empty-content {
+    @apply flex w-full max-w-sm min-w-0 flex-col items-center gap-2.5 text-sm text-balance;
+  }
+}
+
+@layer components.descendants {
+  .ui-empty-media {
+    @apply [&_svg]:pointer-events-none [&_svg]:shrink-0;
+  }
+
+  .ui-empty-media--variant-icon {
+    @apply [&_svg:not([class*='size-'])]:size-4;
+  }
+
+  .ui-empty-description {
+    @apply [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary;
+  }
+}

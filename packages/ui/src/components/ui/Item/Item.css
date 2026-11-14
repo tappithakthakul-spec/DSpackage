@@ -1,0 +1,105 @@
+/* Layer order, lowest to highest:
+   primitives   - this component's own styles
+   compositions - styles this file puts on another design-system component
+   descendants  - rules that style children (*:, [&_svg], [&>x])
+   utilities    - Tailwind classes passed in through className, so they always win. */
+@layer theme, base, components, utilities;
+@layer components.primitives, components.compositions, components.descendants;
+
+@layer components.primitives {
+  .ui-item {
+    @apply flex w-full flex-wrap items-center rounded-lg border text-sm transition-colors duration-100 outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 [a]:transition-colors [a]:hover:bg-muted;
+  }
+
+  .ui-item--variant-default {
+    @apply border-transparent;
+  }
+
+  .ui-item--variant-outline {
+    @apply border-border;
+  }
+
+  .ui-item--variant-muted {
+    @apply border-transparent bg-muted/50;
+  }
+
+  .ui-item--size-default {
+    @apply gap-2.5 px-3 py-2.5;
+  }
+
+  .ui-item--size-sm {
+    @apply gap-2.5 px-3 py-2.5;
+  }
+
+  .ui-item--size-xs {
+    @apply gap-2 px-2.5 py-2 in-data-[slot=dropdown-menu-content]:p-0;
+  }
+
+  .ui-item-media {
+    @apply flex shrink-0 items-center justify-center gap-2 group-has-data-[slot=item-description]/item:translate-y-0.5 group-has-data-[slot=item-description]/item:self-start;
+  }
+
+  .ui-item-media--variant-default {
+    @apply bg-transparent;
+  }
+
+  .ui-item-media--variant-image {
+    @apply size-10 overflow-hidden rounded-sm group-data-[size=sm]/item:size-8 group-data-[size=xs]/item:size-6;
+  }
+
+  .ui-item-group {
+    @apply flex w-full flex-col gap-4 has-data-[size=sm]:gap-2.5 has-data-[size=xs]:gap-2;
+  }
+
+  .ui-item-content {
+    @apply flex flex-1 flex-col gap-1 group-data-[size=xs]/item:gap-0;
+  }
+
+  .ui-item-title {
+    @apply line-clamp-1 flex w-fit items-center gap-2 text-sm leading-snug font-medium underline-offset-4;
+  }
+
+  .ui-item-description {
+    @apply line-clamp-2 text-left text-sm leading-normal font-normal text-muted-foreground group-data-[size=xs]/item:text-xs;
+  }
+
+  .ui-item-actions {
+    @apply flex items-center gap-2;
+  }
+
+  .ui-item-header {
+    @apply flex basis-full items-center justify-between gap-2;
+  }
+
+  .ui-item-footer {
+    @apply flex basis-full items-center justify-between gap-2;
+  }
+}
+
+@layer components.compositions {
+  .ui-item-separator {
+    @apply my-2;
+  }
+}
+
+@layer components.descendants {
+  .ui-item-media {
+    @apply [&_svg]:pointer-events-none;
+  }
+
+  .ui-item-media--variant-icon {
+    @apply [&_svg:not([class*='size-'])]:size-4;
+  }
+
+  .ui-item-media--variant-image {
+    @apply [&_img]:size-full [&_img]:object-cover;
+  }
+
+  .ui-item-content {
+    @apply [&+[data-slot=item-content]]:flex-none;
+  }
+
+  .ui-item-description {
+    @apply [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary;
+  }
+}

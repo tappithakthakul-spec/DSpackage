@@ -1,0 +1,23 @@
+/* Layer order, lowest to highest:
+   primitives   - this component's own styles
+   compositions - styles this file puts on another design-system component
+   descendants  - rules that style children (*:, [&_svg], [&>x])
+   utilities    - Tailwind classes passed in through className, so they always win. */
+@layer theme, base, components, utilities;
+@layer components.primitives, components.compositions, components.descendants;
+
+@layer components.primitives {
+  .ui-kbd {
+    @apply pointer-events-none inline-flex h-5 w-fit min-w-5 items-center justify-center gap-1 rounded-sm bg-muted px-1 font-sans text-xs font-medium text-muted-foreground select-none in-data-[slot=tooltip-content]:bg-background/20 in-data-[slot=tooltip-content]:text-background dark:in-data-[slot=tooltip-content]:bg-background/10;
+  }
+
+  .ui-kbd-group {
+    @apply inline-flex items-center gap-1;
+  }
+}
+
+@layer components.descendants {
+  .ui-kbd {
+    @apply [&_svg:not([class*='size-'])]:size-3;
+  }
+}

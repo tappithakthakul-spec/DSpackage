@@ -1,0 +1,39 @@
+/* Layer order, lowest to highest:
+   primitives   - this component's own styles
+   compositions - styles this file puts on another design-system component
+   descendants  - rules that style children (*:, [&_svg], [&>x])
+   utilities    - Tailwind classes passed in through className, so they always win. */
+@layer theme, base, components, utilities;
+@layer components.primitives, components.compositions, components.descendants;
+
+@layer components.primitives {
+  .ui-message-scroller {
+    @apply relative flex size-full min-h-0 flex-col overflow-hidden;
+  }
+
+  .ui-message-scroller-viewport {
+    @apply size-full min-h-0 min-w-0 scroll-fade-b scrollbar-thin scrollbar-gutter-stable overflow-y-auto overscroll-contain contain-content data-autoscrolling:scrollbar-thumb-transparent data-autoscrolling:scrollbar-track-transparent data-pending-scroll:invisible;
+  }
+
+  .ui-message-scroller-content {
+    @apply flex h-max min-h-full flex-col gap-6;
+  }
+
+  .ui-message-scroller-item {
+    @apply min-w-0 shrink-0 [contain-intrinsic-size:auto_10rem] [content-visibility:auto];
+  }
+
+  .ui-message-scroller-button {
+    @apply absolute inset-s-1/2 -translate-x-1/2 border-border bg-background text-foreground transition-[translate,scale,opacity] duration-200 hover:bg-muted hover:text-foreground data-[active=false]:pointer-events-none data-[active=false]:scale-95 data-[active=false]:opacity-0 data-[active=false]:duration-400 data-[active=false]:ease-[cubic-bezier(0.7,0,0.84,0)] data-[active=true]:translate-y-0 data-[active=true]:scale-100 data-[active=true]:opacity-100 data-[active=true]:ease-[cubic-bezier(0.23,1,0.32,1)] data-[direction=end]:bottom-4 data-[direction=end]:data-[active=false]:translate-y-full data-[direction=start]:top-4 data-[direction=start]:data-[active=false]:-translate-y-full rtl:translate-x-1/2;
+  }
+
+  .ui-message-scroller-button__span {
+    @apply sr-only;
+  }
+}
+
+@layer components.descendants {
+  .ui-message-scroller-button {
+    @apply data-[direction=start]:[&_svg]:rotate-180;
+  }
+}

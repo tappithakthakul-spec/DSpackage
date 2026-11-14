@@ -1,0 +1,79 @@
+/* Layer order, lowest to highest:
+   primitives   - this component's own styles
+   compositions - styles this file puts on another design-system component
+   descendants  - rules that style children (*:, [&_svg], [&>x])
+   utilities    - Tailwind classes passed in through className, so they always win. */
+@layer theme, base, components, utilities;
+@layer components.primitives, components.compositions, components.descendants;
+
+@layer components.primitives {
+  .ui-attachment {
+    @apply relative flex max-w-full shrink-0 flex-wrap border bg-card text-card-foreground transition-colors focus-within:ring-1 focus-within:ring-ring/50 has-[>a,>button]:hover:bg-muted/50 data-[state=error]:border-destructive/30 data-[state=idle]:border-dashed;
+  }
+
+  .ui-attachment--size-default {
+    @apply rounded-xl gap-2 text-sm has-data-[slot=attachment-content]:px-2.5 has-data-[slot=attachment-content]:py-2 has-data-[slot=attachment-media]:p-2;
+  }
+
+  .ui-attachment--size-sm {
+    @apply rounded-xl gap-2.5 text-xs has-data-[slot=attachment-content]:px-2 has-data-[slot=attachment-content]:py-1.5 has-data-[slot=attachment-media]:p-1.5;
+  }
+
+  .ui-attachment--size-xs {
+    @apply gap-1.5 rounded-lg text-xs has-data-[slot=attachment-content]:px-1.5 has-data-[slot=attachment-content]:py-1 has-data-[slot=attachment-media]:p-1;
+  }
+
+  .ui-attachment--orientation-horizontal {
+    @apply w-fit min-w-40 items-center;
+  }
+
+  .ui-attachment--orientation-vertical {
+    @apply min-w-0 w-24 flex-col has-data-[slot=attachment-content]:w-30;
+  }
+
+  .ui-attachment-media {
+    @apply relative flex aspect-square w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-muted text-foreground group-data-[orientation=vertical]/attachment:w-full group-data-[size=sm]/attachment:w-8 group-data-[size=xs]/attachment:w-7 group-data-[size=xs]/attachment:rounded-md group-data-[state=error]/attachment:bg-destructive/10 group-data-[state=error]/attachment:text-destructive;
+  }
+
+  .ui-attachment-media--variant-image {
+    @apply opacity-60 group-data-[state=done]/attachment:opacity-100 group-data-[state=idle]/attachment:opacity-100;
+  }
+
+  .ui-attachment-content {
+    @apply max-w-full min-w-0 flex-1 leading-tight group-data-[orientation=vertical]/attachment:px-1;
+  }
+
+  .ui-attachment-title {
+    @apply block max-w-full min-w-0 truncate font-medium group-data-[state=processing]/attachment:shimmer group-data-[state=uploading]/attachment:shimmer;
+  }
+
+  .ui-attachment-description {
+    @apply mt-0.5 block min-w-0 truncate text-xs text-muted-foreground group-data-[state=error]/attachment:text-destructive/80 max-w-full;
+  }
+
+  .ui-attachment-actions {
+    @apply relative z-20 flex shrink-0 items-center group-data-[orientation=vertical]/attachment:absolute group-data-[orientation=vertical]/attachment:top-3 group-data-[orientation=vertical]/attachment:right-3 group-data-[orientation=vertical]/attachment:gap-1;
+  }
+
+  .ui-attachment-trigger {
+    @apply absolute inset-0 z-10 outline-none;
+  }
+
+  .ui-attachment-group {
+    @apply flex min-w-0 scroll-fade-x snap-x snap-mandatory scroll-px-1 scrollbar-none gap-3 overflow-x-auto overscroll-x-contain py-1;
+  }
+}
+
+@layer components.descendants {
+  .ui-attachment-media {
+    @apply group-data-[orientation=vertical]/attachment:*:data-[slot=spinner]:size-6! [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 group-data-[orientation=vertical]/attachment:[&_svg:not([class*='size-'])]:size-6 group-data-[size=xs]/attachment:[&_svg:not([class*='size-'])]:size-3.5;
+  }
+
+  .ui-attachment-media--variant-image {
+    @apply *:[img]:aspect-square *:[img]:w-full *:[img]:object-cover;
+  }
+
+  .ui-attachment-group {
+    @apply *:data-[slot=attachment]:flex-none *:data-[slot=attachment]:snap-start;
+  }
+}

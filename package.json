@@ -1,0 +1,15 @@
+{
+  "name": "dspackage-workspace",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build -w @scope/ui",
+    "typecheck": "npm run typecheck -w @scope/ui",
+    "lint": "npm run lint -w @scope/ui",
+    "test": "npm test -w @scope/ui",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  }
+}

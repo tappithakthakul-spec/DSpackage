@@ -1,0 +1,51 @@
+/* Layer order, lowest to highest:
+   primitives   - this component's own styles
+   compositions - styles this file puts on another design-system component
+   descendants  - rules that style children (*:, [&_svg], [&>x])
+   utilities    - Tailwind classes passed in through className, so they always win. */
+@layer theme, base, components, utilities;
+@layer components.primitives, components.compositions, components.descendants;
+
+@layer components.primitives {
+  .ui-table-container {
+    @apply relative w-full overflow-x-auto;
+  }
+
+  .ui-table {
+    @apply w-full caption-bottom text-sm;
+  }
+
+  .ui-table-footer {
+    @apply border-t bg-muted/50 font-medium;
+  }
+
+  .ui-table-row {
+    @apply border-b transition-colors hover:bg-muted/50 has-aria-expanded:bg-muted/50 data-[state=selected]:bg-muted;
+  }
+
+  .ui-table-head {
+    @apply h-10 px-2 text-left align-middle font-medium whitespace-nowrap text-foreground [&:has([role=checkbox])]:pr-0;
+  }
+
+  .ui-table-cell {
+    @apply p-2 align-middle whitespace-nowrap [&:has([role=checkbox])]:pr-0;
+  }
+
+  .ui-table-caption {
+    @apply mt-4 text-sm text-muted-foreground;
+  }
+}
+
+@layer components.descendants {
+  .ui-table-header {
+    @apply [&_tr]:border-b;
+  }
+
+  .ui-table-body {
+    @apply [&_tr:last-child]:border-0;
+  }
+
+  .ui-table-footer {
+    @apply [&>tr]:last:border-b-0;
+  }
+}

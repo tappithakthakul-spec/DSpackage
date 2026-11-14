@@ -1,0 +1,51 @@
+/* Layer order, lowest to highest:
+   primitives   - this component's own styles
+   compositions - styles this file puts on another design-system component
+   descendants  - rules that style children (*:, [&_svg], [&>x])
+   utilities    - Tailwind classes passed in through className, so they always win. */
+@layer theme, base, components, utilities;
+@layer components.primitives, components.compositions, components.descendants;
+
+@layer components.primitives {
+  .ui-alert {
+    @apply relative grid w-full gap-0.5 rounded-lg border px-2.5 py-2 text-left text-sm has-data-[slot=alert-action]:relative has-data-[slot=alert-action]:pr-18 has-[>svg]:grid-cols-[auto_1fr] has-[>svg]:gap-x-2;
+  }
+
+  .ui-alert--variant-default {
+    @apply bg-card text-card-foreground;
+  }
+
+  .ui-alert--variant-destructive {
+    @apply bg-card text-destructive;
+  }
+
+  .ui-alert-title {
+    @apply font-medium group-has-[>svg]/alert:col-start-2;
+  }
+
+  .ui-alert-description {
+    @apply text-sm text-balance text-muted-foreground md:text-pretty;
+  }
+
+  .ui-alert-action {
+    @apply absolute top-2 right-2;
+  }
+}
+
+@layer components.descendants {
+  .ui-alert {
+    @apply *:[svg]:row-span-2 *:[svg]:translate-y-0.5 *:[svg]:text-current *:[svg:not([class*='size-'])]:size-4;
+  }
+
+  .ui-alert--variant-destructive {
+    @apply *:data-[slot=alert-description]:text-destructive/90 *:[svg]:text-current;
+  }
+
+  .ui-alert-title {
+    @apply [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground;
+  }
+
+  .ui-alert-description {
+    @apply [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground [&_p:not(:last-child)]:mb-4;
+  }
+}

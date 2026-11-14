@@ -1,0 +1,45 @@
+/* Layer order, lowest to highest:
+   primitives   - this component's own styles
+   compositions - styles this file puts on another design-system component
+   descendants  - rules that style children (*:, [&_svg], [&>x])
+   utilities    - Tailwind classes passed in through className, so they always win. */
+@layer theme, base, components, utilities;
+@layer components.primitives, components.compositions, components.descendants;
+
+@layer components.primitives {
+  .ui-button-group {
+    @apply flex w-fit items-stretch has-[>[data-slot=button-group]]:gap-2;
+  }
+
+  .ui-button-group--orientation-vertical {
+    @apply flex-col;
+  }
+
+  .ui-button-group-text__comp {
+    @apply flex items-center gap-2 rounded-lg border bg-muted px-2.5 text-sm font-medium;
+  }
+}
+
+@layer components.compositions {
+  .ui-button-group-separator {
+    @apply relative self-stretch bg-input data-horizontal:mx-px data-horizontal:w-auto data-vertical:my-px data-vertical:h-auto;
+  }
+}
+
+@layer components.descendants {
+  .ui-button-group {
+    @apply *:focus-visible:relative *:focus-visible:z-10 has-[select[aria-hidden=true]:last-child]:[&>[data-slot=select-trigger]:last-of-type]:rounded-r-lg [&>[data-slot=select-trigger]:not([class*='w-'])]:w-fit [&>input]:flex-1;
+  }
+
+  .ui-button-group--orientation-horizontal {
+    @apply [&>*:not(:first-child)]:rounded-l-none [&>*:not(:first-child)]:border-l-0 [&>*:not(:last-child)]:rounded-r-none [&>[data-slot]:not(:has(~[data-slot]))]:rounded-r-lg!;
+  }
+
+  .ui-button-group--orientation-vertical {
+    @apply [&>*:not(:first-child)]:rounded-t-none [&>*:not(:first-child)]:border-t-0 [&>*:not(:last-child)]:rounded-b-none [&>[data-slot]:not(:has(~[data-slot]))]:rounded-b-lg!;
+  }
+
+  .ui-button-group-text__comp {
+    @apply [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4;
+  }
+}

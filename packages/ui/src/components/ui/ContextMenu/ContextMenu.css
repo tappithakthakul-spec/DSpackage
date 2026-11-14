@@ -1,0 +1,79 @@
+/* Layer order, lowest to highest:
+   primitives   - this component's own styles
+   compositions - styles this file puts on another design-system component
+   descendants  - rules that style children (*:, [&_svg], [&>x])
+   utilities    - Tailwind classes passed in through className, so they always win. */
+@layer theme, base, components, utilities;
+@layer components.primitives, components.compositions, components.descendants;
+
+@layer components.primitives {
+  .ui-context-menu-trigger {
+    @apply select-none;
+  }
+
+  .ui-context-menu-content {
+    @apply z-50 max-h-(--radix-context-menu-content-available-height) min-w-36 origin-(--radix-context-menu-content-transform-origin) overflow-x-hidden overflow-y-auto rounded-lg bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10 duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95;
+  }
+
+  .ui-context-menu-item {
+    @apply relative flex cursor-default items-center gap-1.5 rounded-md px-1.5 py-1 text-sm outline-hidden select-none focus:bg-accent focus:text-accent-foreground data-inset:pl-7 data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive/10 data-[variant=destructive]:focus:text-destructive dark:data-[variant=destructive]:focus:bg-destructive/20 data-disabled:pointer-events-none data-disabled:opacity-50;
+  }
+
+  .ui-context-menu-sub-trigger {
+    @apply flex cursor-default items-center gap-1.5 rounded-md px-1.5 py-1 text-sm outline-hidden select-none focus:bg-accent focus:text-accent-foreground data-inset:pl-7 data-open:bg-accent data-open:text-accent-foreground;
+  }
+
+  .ui-context-menu-sub-trigger__chevron-right-icon {
+    @apply ml-auto;
+  }
+
+  .ui-context-menu-sub-content {
+    @apply z-50 min-w-32 origin-(--radix-context-menu-content-transform-origin) overflow-hidden rounded-lg border bg-popover p-1 text-popover-foreground shadow-lg duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95;
+  }
+
+  .ui-context-menu-checkbox-item {
+    @apply relative flex cursor-default items-center gap-1.5 rounded-md py-1 pr-8 pl-1.5 text-sm outline-hidden select-none focus:bg-accent focus:text-accent-foreground data-inset:pl-7 data-disabled:pointer-events-none data-disabled:opacity-50;
+  }
+
+  .ui-context-menu-checkbox-item__span {
+    @apply pointer-events-none absolute right-2;
+  }
+
+  .ui-context-menu-radio-item {
+    @apply relative flex cursor-default items-center gap-1.5 rounded-md py-1 pr-8 pl-1.5 text-sm outline-hidden select-none focus:bg-accent focus:text-accent-foreground data-inset:pl-7 data-disabled:pointer-events-none data-disabled:opacity-50;
+  }
+
+  .ui-context-menu-radio-item__span {
+    @apply pointer-events-none absolute right-2;
+  }
+
+  .ui-context-menu-label {
+    @apply px-1.5 py-1 text-xs font-medium text-muted-foreground data-inset:pl-7;
+  }
+
+  .ui-context-menu-separator {
+    @apply -mx-1 my-1 h-px bg-border;
+  }
+
+  .ui-context-menu-shortcut {
+    @apply ml-auto text-xs tracking-widest text-muted-foreground group-focus/context-menu-item:text-accent-foreground;
+  }
+}
+
+@layer components.descendants {
+  .ui-context-menu-item {
+    @apply [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 focus:*:[svg]:text-accent-foreground data-[variant=destructive]:*:[svg]:text-destructive;
+  }
+
+  .ui-context-menu-sub-trigger {
+    @apply [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4;
+  }
+
+  .ui-context-menu-checkbox-item {
+    @apply [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4;
+  }
+
+  .ui-context-menu-radio-item {
+    @apply [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4;
+  }
+}

@@ -1,0 +1,39 @@
+/* Layer order, lowest to highest:
+   primitives   - this component's own styles
+   compositions - styles this file puts on another design-system component
+   descendants  - rules that style children (*:, [&_svg], [&>x])
+   utilities    - Tailwind classes passed in through className, so they always win. */
+@layer theme, base, components, utilities;
+@layer components.primitives, components.compositions, components.descendants;
+
+@layer components.primitives {
+  .ui-message-group {
+    @apply flex min-w-0 flex-col gap-2;
+  }
+
+  .ui-message {
+    @apply relative flex w-full min-w-0 gap-2 text-sm data-[align=end]:flex-row-reverse;
+  }
+
+  .ui-message-avatar {
+    @apply flex w-fit min-w-8 shrink-0 items-center justify-center self-end overflow-hidden rounded-full bg-muted group-has-data-[slot=message-footer]/message:-translate-y-8;
+  }
+
+  .ui-message-content {
+    @apply flex w-full min-w-0 flex-col gap-2.5 wrap-break-word;
+  }
+
+  .ui-message-header {
+    @apply flex max-w-full min-w-0 items-center px-3 text-xs font-medium text-muted-foreground group-has-data-[variant=ghost]/message:px-0;
+  }
+
+  .ui-message-footer {
+    @apply flex max-w-full min-w-0 items-center px-3 text-xs font-medium text-muted-foreground group-has-data-[variant=ghost]/message:px-0 group-data-[align=end]/message:justify-end;
+  }
+}
+
+@layer components.descendants {
+  .ui-message-content {
+    @apply group-data-[align=end]/message:*:data-slot:self-end;
+  }
+}

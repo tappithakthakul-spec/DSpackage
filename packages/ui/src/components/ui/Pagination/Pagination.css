@@ -1,0 +1,49 @@
+/* Layer order, lowest to highest:
+   primitives   - this component's own styles
+   compositions - styles this file puts on another design-system component
+   descendants  - rules that style children (*:, [&_svg], [&>x])
+   utilities    - Tailwind classes passed in through className, so they always win. */
+@layer theme, base, components, utilities;
+@layer components.primitives, components.compositions, components.descendants;
+
+@layer components.primitives {
+  .ui-pagination {
+    @apply mx-auto flex w-full justify-center;
+  }
+
+  .ui-pagination-content {
+    @apply flex items-center gap-0.5;
+  }
+
+  .ui-pagination-previous__span {
+    @apply hidden sm:block;
+  }
+
+  .ui-pagination-next__span {
+    @apply hidden sm:block;
+  }
+
+  .ui-pagination-ellipsis {
+    @apply flex size-8 items-center justify-center;
+  }
+
+  .ui-pagination-ellipsis__span {
+    @apply sr-only;
+  }
+}
+
+@layer components.compositions {
+  .ui-pagination-previous {
+    @apply pl-1.5!;
+  }
+
+  .ui-pagination-next {
+    @apply pr-1.5!;
+  }
+}
+
+@layer components.descendants {
+  .ui-pagination-ellipsis {
+    @apply [&_svg:not([class*='size-'])]:size-4;
+  }
+}

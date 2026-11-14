@@ -1,0 +1,75 @@
+/* Layer order, lowest to highest:
+   primitives   - this component's own styles
+   compositions - styles this file puts on another design-system component
+   descendants  - rules that style children (*:, [&_svg], [&>x])
+   utilities    - Tailwind classes passed in through className, so they always win. */
+@layer theme, base, components, utilities;
+@layer components.primitives, components.compositions, components.descendants;
+
+@layer components.primitives {
+  .ui-carousel {
+    @apply relative;
+  }
+
+  .ui-carousel-content {
+    @apply overflow-hidden;
+  }
+
+  .ui-carousel-content__div {
+    @apply flex;
+  }
+
+  .ui-carousel-content__div--horizontal {
+    @apply -ml-4;
+  }
+
+  .ui-carousel-content__div--vertical {
+    @apply -mt-4 flex-col;
+  }
+
+  .ui-carousel-item {
+    @apply min-w-0 shrink-0 grow-0 basis-full;
+  }
+
+  .ui-carousel-item--horizontal {
+    @apply pl-4;
+  }
+
+  .ui-carousel-item--vertical {
+    @apply pt-4;
+  }
+
+  .ui-carousel-previous__span {
+    @apply sr-only;
+  }
+
+  .ui-carousel-next__span {
+    @apply sr-only;
+  }
+}
+
+@layer components.compositions {
+  .ui-carousel-previous {
+    @apply absolute touch-manipulation rounded-full;
+  }
+
+  .ui-carousel-next {
+    @apply absolute touch-manipulation rounded-full;
+  }
+
+  .ui-carousel-previous--horizontal {
+    @apply inset-y-0 -left-12 my-auto;
+  }
+
+  .ui-carousel-previous--vertical {
+    @apply -top-12 left-1/2 -translate-x-1/2 rotate-90;
+  }
+
+  .ui-carousel-next--horizontal {
+    @apply inset-y-0 -right-12 my-auto;
+  }
+
+  .ui-carousel-next--vertical {
+    @apply -bottom-12 left-1/2 -translate-x-1/2 rotate-90;
+  }
+}

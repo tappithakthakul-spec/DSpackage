@@ -1,0 +1,107 @@
+/* Layer order, lowest to highest:
+   primitives   - this component's own styles
+   compositions - styles this file puts on another design-system component
+   descendants  - rules that style children (*:, [&_svg], [&>x])
+   utilities    - Tailwind classes passed in through className, so they always win. */
+@layer theme, base, components, utilities;
+@layer components.primitives, components.compositions, components.descendants;
+
+@layer components.primitives {
+  .ui-chart {
+    @apply flex aspect-video justify-center text-xs;
+  }
+
+  .ui-chart-tooltip-content__label {
+    @apply font-medium;
+  }
+
+  .ui-chart-tooltip-content__label-text {
+    @apply font-medium;
+  }
+
+  .ui-chart-tooltip-content {
+    @apply grid min-w-32 items-start gap-1.5 rounded-lg border border-border/50 bg-background px-2.5 py-1.5 text-xs shadow-xl;
+  }
+
+  .ui-chart-tooltip-content__items {
+    @apply grid gap-1.5;
+  }
+
+  .ui-chart-tooltip-content__item {
+    @apply flex w-full flex-wrap items-stretch gap-2;
+  }
+
+  .ui-chart-tooltip-content__item--dot {
+    @apply items-center;
+  }
+
+  .ui-chart-tooltip-content__indicator {
+    @apply shrink-0 rounded-[2px] border-(--color-border) bg-(--color-bg);
+  }
+
+  .ui-chart-tooltip-content__indicator--dot {
+    @apply h-2.5 w-2.5;
+  }
+
+  .ui-chart-tooltip-content__indicator--line {
+    @apply w-1;
+  }
+
+  .ui-chart-tooltip-content__indicator--dashed {
+    @apply w-0 border-[1.5px] border-dashed bg-transparent;
+  }
+
+  .ui-chart-tooltip-content__indicator--dashed.ui-chart-tooltip-content__indicator--nested {
+    @apply my-0.5;
+  }
+
+  .ui-chart-tooltip-content__item-body {
+    @apply flex flex-1 justify-between leading-none items-center;
+  }
+
+  .ui-chart-tooltip-content__item-body--nested {
+    @apply items-end;
+  }
+
+  .ui-chart-tooltip-content__item-label {
+    @apply grid gap-1.5;
+  }
+
+  .ui-chart-tooltip-content__item-name {
+    @apply text-muted-foreground;
+  }
+
+  .ui-chart-tooltip-content__item-value {
+    @apply font-mono font-medium text-foreground tabular-nums;
+  }
+
+  .ui-chart-legend-content {
+    @apply flex items-center justify-center gap-4 pt-3;
+  }
+
+  .ui-chart-legend-content--top {
+    @apply pt-0 pb-3;
+  }
+
+  .ui-chart-legend-content__item {
+    @apply flex items-center gap-1.5;
+  }
+
+  .ui-chart-legend-content__indicator {
+    @apply h-2 w-2 shrink-0 rounded-[2px];
+  }
+}
+
+@layer components.descendants {
+  .ui-chart {
+    @apply [&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-border/50 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-hidden [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-border [&_.recharts-radial-bar-background-sector]:fill-muted [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted [&_.recharts-reference-line_[stroke='#ccc']]:stroke-border [&_.recharts-sector]:outline-hidden [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-surface]:outline-hidden;
+  }
+
+  .ui-chart-tooltip-content__item {
+    @apply [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:text-muted-foreground;
+  }
+
+  .ui-chart-legend-content__item {
+    @apply [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-muted-foreground;
+  }
+}

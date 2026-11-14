@@ -1,0 +1,51 @@
+/* Layer order, lowest to highest:
+   primitives   - this component's own styles
+   compositions - styles this file puts on another design-system component
+   descendants  - rules that style children (*:, [&_svg], [&>x])
+   utilities    - Tailwind classes passed in through className, so they always win. */
+@layer theme, base, components, utilities;
+@layer components.primitives, components.compositions, components.descendants;
+
+@layer components.primitives {
+  .ui-accordion {
+    @apply flex w-full flex-col;
+  }
+
+  .ui-accordion-item {
+    @apply not-last:border-b;
+  }
+
+  .ui-accordion-trigger__header {
+    @apply flex;
+  }
+
+  .ui-accordion-trigger {
+    @apply relative flex flex-1 items-start justify-between rounded-lg border border-transparent py-2.5 text-left text-sm font-medium transition-all outline-none hover:underline focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:after:border-ring disabled:pointer-events-none disabled:opacity-50;
+  }
+
+  .ui-accordion-trigger-icon__chevron-down-icon {
+    @apply pointer-events-none shrink-0 group-aria-expanded/accordion-trigger:hidden;
+  }
+
+  .ui-accordion-trigger-icon__chevron-up-icon {
+    @apply pointer-events-none hidden shrink-0 group-aria-expanded/accordion-trigger:inline;
+  }
+
+  .ui-accordion-content {
+    @apply overflow-hidden text-sm data-open:animate-accordion-down data-closed:animate-accordion-up;
+  }
+
+  .ui-accordion-content__div {
+    @apply h-(--radix-accordion-content-height) pt-0 pb-2.5;
+  }
+}
+
+@layer components.descendants {
+  .ui-accordion-trigger {
+    @apply **:data-[slot=accordion-trigger-icon]:ml-auto **:data-[slot=accordion-trigger-icon]:size-4 **:data-[slot=accordion-trigger-icon]:text-muted-foreground;
+  }
+
+  .ui-accordion-content__div {
+    @apply [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground [&_p:not(:last-child)]:mb-4;
+  }
+}
